@@ -1,9 +1,9 @@
 '''
- __  __  _____     _____ __  __ _____ _   _ _____ ___    ____  _____ _____ ___ _      __ _   _ _____ ___  
+  __  __  _____     _____ __  __ _____ _   _ _____ ___    ____  _____ _____ ___ _      __ _   _ _____ ___  
  |  \/  |/ _ \ \   / /_ _|  \/  | ____| \ | |_   _/ _ \  |  _ \| ____|_   _|_ _| |    /_/| \ | | ____/ _ \ 
  | |\/| | | | \ \ / / | || |\/| |  _| |  \| | | || | | | | |_) |  _|   | |  | || |   |_ _|  \| |  _|| | | |
  | |  | | |_| |\ V /  | || |  | | |___| |\  | | || |_| | |  _ <| |___  | |  | || |___ | || |\  | |__| |_| |
- |_|  |_|\___/  \_/  |___|_|  |_|_____|_| \_| |_| \___/  |_| \_\_____| |_| |___|_____|___|_| \_|_____\___/  0.2
+ |_|  |_|\___/  \_/  |___|_|  |_|_____|_| \_| |_| \___/  |_| \_\_____| |_| |___|_____|___|_| \_|_____\___/  0.2.1
 
 '''                                                                                                        
 from vpython import *
@@ -27,21 +27,34 @@ class RectilinearMovement:
         # definição dos valores iniciais
         self.t  = 0
         self.dt = .01
-        self.a  = 0
+        self.a  = vector(0,0,0)
         self.object_vel = vector(0,0,0)
         self.running    = False
-        self.isInitial  = True
-        self.initial_vel = 0
-        self.initial_pos = 0
+        # self.isInitial  = True
+        # self.initial_vel = vector(0,0,0)
+        # self.initial_pos = vector(0,0,0)
 
     def createObjects(self):
         # esfera
         self.object = sphere(pos = vector(0,1,0), radius = 1, color = color.red)
+        
+        # criação e configuração da seta de aceleração [alterar para a develocidade]
+        self.ace_arrow_right = arrow(pos = vector((self.object.pos.x-self.object.radius)/2, self.object.pos.y + 2, self.object.pos.z))
+        
+        self.ace_arrow_right.visible = False
+        
+        self.ace_arrow_left = arrow(pos = vector((self.object.pos.x-self.object.radius)/2, self.object.pos.y + 2, self.object.pos.z))
+        self.ace_arrow_left.rotate(180,vector(0,0,0))
+        
+        self.ace_arrow_left.visible = False
+        
         # chão abaixo da esfera
         self.ground = box(pos = vector(0,0,0), size = vector(200,.5,2), color = color.white)
+        
         # largura da cena
         scene.width = self.WIDTH
-        # camera seguir esfera
+        
+        # configurar camera para seguir esfera
         scene.follow(self.object)
 
     def createWidgets(self):
@@ -50,11 +63,19 @@ class RectilinearMovement:
         self.vSpace(1)
        
         # texto velocidade
-        self.velocity_label = wtext(text = "Velocidade")
+        self.velocity_label = wtext(text = "Velocidade:")
         self.hSpace(2)
        
         # caixa de texto para a inserção da velocidade
         self.velocity_input = winput(bind = self.nothing, type = "numeric", width = 100, _height = 20)
+        self.hSpace(3)
+       
+        # texto acereleração
+        self.aceleration_label = wtext(text = "Aceleração:")
+        self.hSpace(2)
+       
+        # caixa de texto para a inserção da aceleração
+        self.aceleration_input = winput(bind = self.nothing, type = "numeric", width = 100, _height = 20)
         self.hSpace(3)
         
         # botão de iniciar a animação junto com os graficos
@@ -95,42 +116,68 @@ class RectilinearMovement:
         # captura a velocidade informada pelo usuario
         self.object_vel.x = float((self.velocity_input.text))
         
+        # captura a aceleração informada pelo usuario
+        self.a.x = float((self.aceleration_input.text))
+        
+        # aumenta o valor x do grafico 2 | 5 posições a mais do valor maximo informado
         if self.object_vel.x > self.graph2_config.xmax:
-            # aumenta o valor x do grafico 2 | 5 posições a mais do valor maximo informado
             self.graph2_config.xmax = self.object_vel.x + 5
 
-        if self.a > self.graph3_config.xmax:
-            # aumenta o valor x do grafico 3 | 5 posições a mais do valor maximo informado
-            self.graph3_config.xmax = self.a + 5
+        # aumenta o valor x do grafico 3 | 5 posições a mais do valor maximo informado
+        if self.a.x > self.graph3_config.xmax:
+            self.graph3_config.xmax = self.a.x + 5
 
-        if self.isInitial:
-            # armazena apenas os valores iniciais
-            self.initial_vel = self.object_vel.x
-            self.initial_pos = self.object.pos.x
-            self.isInitial   = False
+        # armazena apenas os valores iniciais
+        # if self.isInitial:
+        #     self.initial_vel = self.object_vel.x
+        #     self.initial_pos = self.object.pos
+        #     self.isInitial   = False
 
         self.running = True
         while self.running:
             # fps
             rate(300)
+
             # calculo do tempo
             self.t = self.t + self.dt
-            # calculo da posição
-            self.object.pos = self.object.pos + (self.object_vel * self.dt)
+
+            # calculo da aceleração
+            # self.a = (self.object_vel.x - self.initial_vel) / (self.object.pos.x - self.initial_pos)
             
+            # calculo da posição
+            self.object.pos.x = self.object.pos.x + (self.object_vel.x * self.dt)
+            # self.object.pos.x = (self.a.x * (self.t**2)) / 2
+
+            # dobra o tamanho do chão quando a esfere está proxima do fim
             if self.object.pos.x > self.ground.size.x // 2 or self.object.pos.x < -(self.ground.size.x // 2) :
-                # dobra o tamanho do chão quando a esfere está proxima do fim
                 self.ground.size.x = self.ground.size.x * 2
 
             # atualiza as informações que aparecem na tela
-            self.x_pos_info.text = self.object.pos.x
-            self.time_info.text  = self.t
+            self.updateScreenInfo()
 
-            # calculo da aceleração
-            self.a = (self.object_vel.x - self.initial_vel) / (self.object.pos.x - self.initial_pos)
+            # atualiza as setas
+            self.updateArrows()
 
             # atualiza os graficos
             self.updateGraphs()
+
+    def updateArrows(self):
+        self.ace_arrow_right.pos.x = self.object.pos.x
+        self.ace_arrow_left.pos.x = self.object.pos.x
+        
+        if self.object_vel.x == 0:
+            self.ace_arrow_right.visible = False
+            self.ace_arrow_left.visible  = False
+        elif self.object_vel.x>0:
+            self.ace_arrow_right.visible = True
+            self.ace_arrow_left.visible  = False
+        else:
+            self.ace_arrow_right.visible = False
+            self.ace_arrow_left.visible  = True
+
+    def updateScreenInfo(self):
+        self.x_pos_info.text = self.object.pos.x
+        self.time_info.text  = self.t
    
     '''
         ┌─┐┬ ┬┌┐┌┌─┐┌─┐┌─┐┌─┐  ┌┬┐┌─┐  ┌─┐┬─┐┌─┐┌─┐┬┌─┐┌─┐┌─┐
@@ -140,21 +187,21 @@ class RectilinearMovement:
 
     def createGraph(self):
         # grafico 1 posição / tempo
-        self.graph1_config = graph(width = self.WIDTH, _height = 400, title = 'Posição / Tempo', xtitle = 'Posição', ytitle = 'Tempo', foreground = color.black, background = color.orange, fast = True)
+        self.graph1_config = graph(width = self.WIDTH, _height = 400, title = 'Posição / Tempo', xtitle = 'Tempo', ytitle = 'Posição', foreground = color.black, background = color.orange, fast = True)
         self.graph1 = gcurve(graph = self.graph1_config, color = color.red)
     
         # grafico 2 velocidade / tempo
-        self.graph2_config = graph(width = self.WIDTH, _height = 400, title = 'Velocidade / Tempo', xtitle = 'Velocidade', ytitle = 'Tempo', foreground = color.black, background = color.yellow, fast = False, scroll = True, xmin = 0, xmax = 10)
+        self.graph2_config = graph(width = self.WIDTH, _height = 400, title = 'Velocidade / Tempo', xtitle = 'Tempo', ytitle = 'Velocidade', foreground = color.black, background = color.yellow, fast = False, scroll = True, xmin = 0, xmax = 10)
         self.graph2 = gcurve(graph = self.graph2_config, color = color.blue)
 
         # grafico 3 aceleração / tempo
-        self.graph3_config = graph(width = self.WIDTH, _height = 400, title = 'Aceleração / Tempo', xtitle = 'Aceleração', ytitle = 'Tempo', foreground = color.black, background = color.cyan, fast = False, scroll = True, xmin = 0, xmax = 5)
+        self.graph3_config = graph(width = self.WIDTH, _height = 400, title = 'Aceleração / Tempo', xtitle = 'Tempo', ytitle = 'Aceleração', foreground = color.black, background = color.cyan, fast = False, scroll = True, xmin = 0, xmax = 5)
         self.graph3 = gcurve(graph = self.graph3_config, color = color.black)
  
     def updateGraphs(self):
-        self.graph1.plot(self.object.pos.x, self.t)
-        self.graph2.plot(self.object_vel.x, self.t)
-        self.graph3.plot(self.a, self.t)
+        self.graph1.plot(self.t, self.object.pos.x)
+        self.graph2.plot(self.t, self.object_vel.x)
+        self.graph3.plot(self.t, self.a.x)
 
     '''
         ┬ ┬┬ ┌┬┐┬┬  ┬┌┬┐┌─┐┬─┐┬┌─┐┌─┐
@@ -176,6 +223,7 @@ class RectilinearMovement:
         self.updateGraphs()
 
     def nothing(self):
+        # literalmente nada
         pass
 
 RectilinearMovement()
