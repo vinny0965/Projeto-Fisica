@@ -3,14 +3,14 @@ Projeto relacionado a disciplina Fisica para a computação | UFRPE UAST
 # A fazer  
 ### MOVIMENTO RETILINEO ###  
 Fazer um programa que simule um movimento retilíneo com velocidade variável, com animações que possam ter a possibilidade de colocar a velocidade constante, e juntamente com a animação aparecer os seguintes gráficos.  
-- [ ] Posição X tempo  
-- [ ] Velocidade X tempo  
-- [ ] Aceleração X Tempo  
+- [X] Posição X tempo  
+- [X] Velocidade X tempo  
+- [X] Aceleração X Tempo  
 - [ ] Uma janela aparecendo a aceleração quando houver e a velocidade instantânea e a velocidade média que a animação está desenvolvendo.  
-- [ ] Todos os gráficos aparecendo em tempo real a medida que a animação acontece.  
+- [X] Todos os gráficos aparecendo em tempo real a medida que a animação acontece.  
   
     ### CORREÇÕES ### 
-  - [ ] Inverter informações dos 3 gráficos
+  - [X] Inverter informações dos 3 gráficos
   - [ ] Adicionar seta de velocidade na esfera
   - [ ] Adicionar seta de aceleração na esfera
   - [ ] Adicionar caixa de texto para a aceleração
