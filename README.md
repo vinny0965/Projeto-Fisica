@@ -15,6 +15,13 @@ Fazer um programa que simule um movimento em duas dimensões, com animações qu
 - [ ] Y (posição) X T  
 - [ ] R (alcance) X T  
 - [ ] Todos os gráficos aparecendo em tempo real a medida que a animação acontece.  
+    
+  **CORREÇÕES**  
+  - [ ] Inverter informações dos 3 gráficos
+  - [ ] Adicionar seta de velocidade na esfera
+  - [ ] Adicionar seta de aceleração na esfera
+  - [ ] Adicionar caixa de texto para a aceleração
+  - [ ] Adicionar valor da aceleraão e velocidade na tela
   
 **MOVIMENTO DE PROJETEIS**  
 Fazer um programa com as seguintes características:
