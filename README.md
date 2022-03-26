@@ -9,6 +9,14 @@ Fazer um programa que simule um movimento retilíneo com velocidade variável, c
 - [ ] Uma janela aparecendo a aceleração quando houver e a velocidade instantânea e a velocidade média que a animação está desenvolvendo.  
 - [ ] Todos os gráficos aparecendo em tempo real a medida que a animação acontece.  
   
+    **CORREÇÕES**  
+  - [ ] Inverter informações dos 3 gráficos
+  - [ ] Adicionar seta de velocidade na esfera
+  - [ ] Adicionar seta de aceleração na esfera
+  - [ ] Adicionar caixa de texto para a aceleração
+  - [ ] Adicionar valor da aceleraão e velocidade na tela
+  
+  
 **MOVIMENTO DE PROJETEIS**  
 Fazer um programa que simule um movimento em duas dimensões, com animações que possam ter a possibilidade de alterar a velocidade inicial do sistema, criar um quadro com a velocidade na direção y, a variação de altura y e a velocidade na direção horizontal x, e o alcance horizontal, e com a animação dos seguintes gráficos.  
 - [ ] Vy (Velocidade na direção y) X T  
@@ -16,13 +24,7 @@ Fazer um programa que simule um movimento em duas dimensões, com animações qu
 - [ ] R (alcance) X T  
 - [ ] Todos os gráficos aparecendo em tempo real a medida que a animação acontece.  
     
-  **CORREÇÕES**  
-  - [ ] Inverter informações dos 3 gráficos
-  - [ ] Adicionar seta de velocidade na esfera
-  - [ ] Adicionar seta de aceleração na esfera
-  - [ ] Adicionar caixa de texto para a aceleração
-  - [ ] Adicionar valor da aceleraão e velocidade na tela
-  
+
 **MOVIMENTO DE PROJETEIS**  
 Fazer um programa com as seguintes características:
 - [ ] Mostre a transferência de energia entre energia cinética e energia potencial elástica  
