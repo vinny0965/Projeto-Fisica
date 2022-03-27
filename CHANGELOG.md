@@ -21,3 +21,10 @@
   - implementação da seta de velocidade
   - adição da textura no objeto do chão
   - o objeto do chão não mais aumenta de tamanho, agora sua posição é alterada para simular movimento 
+   
+### v0.3.1
+  - implementação de Trhead
+  - implementação do slider de velocidade variável
+  - implementação da velocidade variável sobre o objeto
+  - implementação do calculo e exibição da velocidade média
+  - implementação de alerta caso o usuario preencha os dados errados
