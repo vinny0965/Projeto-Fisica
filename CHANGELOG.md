@@ -15,7 +15,7 @@
   - implementação do calculo da aceleração interferindo na velocidade
   - criação do "style_setup" para alteração da aparência 
 
-### v0.2.2
+### v0.3
   - correção do calculo da aceleração
   - implementação do texto da aceleração e velocidade na tela
   - implementação da seta de velocidade
