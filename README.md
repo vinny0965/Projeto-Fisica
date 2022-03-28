@@ -24,7 +24,7 @@ Fazer um programa que simule um movimento em duas dimensões, com animações qu
 - [ ] R (alcance) X T  
 - [ ] Todos os gráficos aparecendo em tempo real a medida que a animação acontece.  
     
-### MOVIMENTO DE PROJETEIS ##  
+### Trabalho e energia cinética e conservação de Energia ##  
 Fazer um programa com as seguintes características:
 - [ ] Mostre a transferência de energia entre energia cinética e energia potencial elástica  
 - [ ] Mostre a conservação de energia do sistema como o todo para duas situações 
